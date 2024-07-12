@@ -1,5 +1,7 @@
---- Keybind to open for pc is "comma" -> " , "
+local keybind = Enum.KeyCode.Comma-- write ur keybind here Comma is ","
+-- Check for Enum.KeyCodes here > https://create.roblox.com/docs/reference/engine/enums/KeyCode
 -- Made by Gi#7331
+-- Edited by zapyla (discord)
 
 game:GetService("StarterGui"):SetCore("SendNotification",{
                 Title = "Tips!",
@@ -16,7 +18,6 @@ local ContextActionService = game:GetService("ContextActionService")
 local HttpService = game:GetService("HttpService")
 local GuiService = game:GetService("GuiService")
 local CoreGui = game:GetService("CoreGui")
-local Open = Instance.new("TextButton")
 UICorner = Instance.new("UICorner")
 local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
@@ -80,10 +81,6 @@ BackFrame.SizeConstraint = Enum.SizeConstraint.RelativeYY
 BackFrame.BackgroundTransparency = 1
 BackFrame.BorderSizePixel = 0
 BackFrame.Parent = ScreenGui
-
-UICorner.Name = "UICorner"
-UICorner.Parent = Open
-UICorner.CornerRadius = UDim.new(1, 0)
 
 local EmoteName = Instance.new("TextLabel")
 EmoteName.Name = "EmoteName"
@@ -161,51 +158,6 @@ local function SortEmotes()
 	end
 end
 
-local function createsort(order, text, sort)
-	local CreatedSort = Instance.new("TextButton")
-	CreatedSort.SizeConstraint = Enum.SizeConstraint.RelativeXX
-	CreatedSort.Size = UDim2.new(1, 0, 0.2, 0)
-	CreatedSort.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-	CreatedSort.LayoutOrder = order
-	CreatedSort.TextColor3 = Color3.new(1, 1, 1)
-	CreatedSort.Text = text
-	CreatedSort.TextScaled = true
-	CreatedSort.BorderSizePixel = 0
-	Corner:Clone().Parent = CreatedSort
-	CreatedSort.Parent = SortFrame
-	CreatedSort.MouseButton1Click:Connect(function()
-		SortFrame.Visible = false
-		Open.Text = "Open"
-		CurrentSort = sort
-		SortEmotes()
-	end)
-	return CreatedSort
-end
-
-createsort(1, "Recently Updated First", "recentfirst")
-createsort(2, "Recently Updated Last", "recentlast")
-createsort(3, "Alphabetically First", "alphabeticfirst")
-createsort(4, "Alphabetically Last", "alphabeticlast")
-createsort(5, "Highest Price", "highestprice")
-createsort(6, "Lowest Price", "lowestprice")
-
-local SortButton = Instance.new("TextButton")
-SortButton.BorderSizePixel = 0
-SortButton.AnchorPoint = Vector2.new(0.5, 0.5)
-SortButton.Position = UDim2.new(0.925, -5, -0.075, 0)
-SortButton.Size = UDim2.new(0.15, 0, 0.1, 0)
-SortButton.TextScaled = true
-SortButton.TextColor3 = Color3.new(1, 1, 1)
-SortButton.BackgroundColor3 = Color3.new(0, 0, 0)
-SortButton.BackgroundTransparency = 0.3
-SortButton.Text = "Sort"
-SortButton.MouseButton1Click:Connect(function()
-	SortFrame.Visible = not SortFrame.Visible
-	Open.Text = "Open"
-end)
-Corner:Clone().Parent = SortButton
-SortButton.Parent = BackFrame
-
 local CloseButton = Instance.new("TextButton")
 CloseButton.BorderSizePixel = 0
 CloseButton.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -264,7 +216,6 @@ SearchBar.Parent = BackFrame
 local function openemotes(name, state, input)
 	if state == Enum.UserInputState.Begin then
 		BackFrame.Visible = not BackFrame.Visible
-		Open.Text = "Open"
 	end
 end
 
@@ -273,7 +224,7 @@ ContextActionService:BindCoreActionAtPriority(
 	openemotes,
 	true,
 	2001,
-	Enum.KeyCode.Comma
+	keybind
 )
 
 local inputconnect
@@ -287,7 +238,6 @@ ScreenGui:GetPropertyChangedSignal("Enabled"):Connect(function()
 			if not processed then
 				if input.UserInputType == Enum.UserInputType.MouseButton1 then
 					BackFrame.Visible = false
-					Open.Text = "Open"
 				end
 			end
 		end)
@@ -299,13 +249,11 @@ end)
 GuiService.EmotesMenuOpenChanged:Connect(function(isopen)
 	if isopen then
 		BackFrame.Visible = false
-		Open.Text = "Open"
 	end
 end)
 
 GuiService.MenuOpened:Connect(function()
 	BackFrame.Visible = false
-	Open.Text = "Open"
 end)
 
 if not game:IsLoaded() then
@@ -343,7 +291,6 @@ local LocalPlayer = Players.LocalPlayer
 
 local function PlayEmote(name: string, id: IntValue)
 	BackFrame.Visible = false
-	Open.Text = "Open"
 	SearchBar.Text = ""
 	local Humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
 	local Description = Humanoid and Humanoid:FindFirstChildOfClass("HumanoidDescription")
