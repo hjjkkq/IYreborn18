@@ -81,30 +81,6 @@ BackFrame.BackgroundTransparency = 1
 BackFrame.BorderSizePixel = 0
 BackFrame.Parent = ScreenGui
 
-Open.Name = "Open"
-Open.Parent = ScreenGui
-Open.Draggable = true
-Open.Size = UDim2.new(0.05,0,0.114,0)
-Open.Position = UDim2.new(0.05, 0, 0.25, 0)
-Open.Text = "Close"
-Open.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Open.TextColor3 = Color3.fromRGB(255, 255, 255)
-Open.TextScaled = true
-Open.TextSize = 20
-Open.Visible = true
-Open.BackgroundTransparency = .5
-Open.MouseButton1Up:Connect(function()
-if Open.Text == "Open" then
-		Open.Text = "Close"
-		BackFrame.Visible = true
-else
-		if Open.Text == "Close" then
-			Open.Text = "Open"
-			BackFrame.Visible = false
-		end
-end
-end)
-
 UICorner.Name = "UICorner"
 UICorner.Parent = Open
 UICorner.CornerRadius = UDim.new(1, 0)
